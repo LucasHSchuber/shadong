@@ -11,13 +11,12 @@ node_modules
 client/node_modules
 client/node_modules/
 client/src/apiConfig.js
+client/env.js
+client/.env
 
 dist
 dist-ssr
 *.local
-
-client/env.js
-client/.env
 
 server/env
 

@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const CLIENT_ID = '1a624a77bfb243d5a504f4227522ab2b';
-const CLIENT_SECRET = 'b8d9c783a9e74a58b4853f3cc382a162';
+import keys from "../../../client/env.js";
 
 // import images
 import img from "../assets/images/s.png"
@@ -42,7 +41,7 @@ const Songresult = () => {
     // Get Access Token
     useEffect(() => {
         const getAccessToken = async () => {
-            const authString = `${CLIENT_ID}:${CLIENT_SECRET}`;
+            const authString = `${keys.SPOTIFY_CLIENT_ID}:${keys.SPOTIFY_CLIENT_SECRET}`;
             const base64Auth = btoa(authString); 
 
             const response = await fetch('https://accounts.spotify.com/api/token', {

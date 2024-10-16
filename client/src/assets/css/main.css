@@ -1,0 +1,148 @@
+
+.index-wrapper{
+    background-color: #EE929D;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+.songresult-wrapper{
+    background-color: #EE929D;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+
+.content-wrapper{
+    padding: 0 8em;
+}
+
+
+/* -----  INDEX  -----  */
+.hero-wrapper{
+    height: 35em;
+    background-color: #EE929D;
+    color: white;
+    padding: 0 10em;
+}
+.hero-img{
+    width: 25em;
+    border-radius: 15px;
+}
+.left-hero-box{
+    width: 50%;
+    text-align: center;
+}
+.right-hero-box{
+    width: 45%;
+    text-align: left;
+    margin-right: 4em;
+    margin-left: 2em;
+}
+.right-hero-box span{
+    font-family: "Irish Grover", system-ui;
+    font-size: 0.9em !important;
+    font-weight: 500;
+}
+.right-hero-box h1{
+ font-size: 2.8em;
+ font-weight: 900;
+}
+.right-hero-box p{
+ font-size: 1.3em;
+ font-weight: 400;
+}
+
+
+
+.info-wrapper{
+    height: 30em;
+    background-color: #ffffff;
+}
+
+.content-wrapper-1{
+    background-color: #EE929D;
+    color: white;
+    height: 8em;
+    text-align: left;
+    padding: 2em 10em;
+}
+.content-wrapper-2{
+    background-color: #ffffff;
+    color: #EE929D;
+    height: 8em;
+    text-align: right;
+    padding: 2em 14em;
+}
+.content-wrapper-3{
+    background-color: #EE929D;
+    color: white;
+    height: 8em;
+    text-align: left;
+    padding: 2em 18em;
+}
+.content-wrapper-4{
+    background-color: #ffffff;
+    color: #EE929D;
+    height: 8em;
+    text-align: right;
+    padding: 2em 22em;
+}
+.content-wrapper-5{
+    background-color: #EE929D;
+    color: white;
+    height: 8em;
+    padding: 2em 22em;
+    text-align: center;
+    font-family: "Irish Grover", system-ui;
+}
+
+
+
+/* ----  SONGRESULT  ----- */
+.songresult-box{
+    margin-top: 4em;
+    max-height: 14em !important;
+    color: white;
+    padding: 0 10em;
+}
+
+.songresult-music-box{
+    padding: 15em 10em 10em 10em;
+    height: fit-content;
+    width: 100%;
+    background-color: white !important;
+}
+.songresult-music-box .title{
+    color:#EE929D !important;
+    margin-bottom: 1em;
+    font-size: 2em;
+    font-weight: 800;
+}
+.songresult-songs-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; 
+    gap: 75px; 
+}
+.songresult-right-box{
+    padding: 0 5em;
+}
+.songresult-left-box img{
+    border: 3px solid #be5f6a;
+}
+.songresult-songsbyartist{
+    width: 150px;
+}
+.songresult-songsbyartist h1{
+    margin-top: 0.4em;
+    font-size: 1.1em;
+    color:#be5f6a;
+    font-weight: 800;
+}
+.songresult-songsbyartist h2{
+    margin-top: 0.4em;
+    font-size: 0.9em;
+    color:#be5f6a;
+    font-weight: 800;
+}
+.songresult-songsbyartist img{
+    width: 150px;
+    border: 1px solid #be5f6a;
+    border-radius: 4px;
+}

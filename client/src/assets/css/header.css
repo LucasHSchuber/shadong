@@ -1,0 +1,148 @@
+/* Basic header styling */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: inherit;
+    position: relative;
+    padding: 4em 6em;
+    background-color: #EE929D;
+}
+
+.header .title a{
+    font-size: 1.2em;
+    font-weight: 800;
+    color: white !important;
+    text-decoration: none;
+    font-family: "Irish Grover", system-ui;
+    transition: 0.2s;
+}
+.header .title a:hover{
+    color: rgb(255, 255, 255) !important;
+    text-shadow: 2px 5px 5px rgba(133, 133, 133, 0.4);
+}
+.header-links{
+    margin: 1.5em 3em;
+}
+.header-links a{
+    color: white !important;
+    margin: 0 1em;
+    font-weight: 800;
+    font-size: 1.1em;
+    padding: 0.5em 0em;
+    text-decoration: none !important;
+}
+.register{
+    border: 1.5px solid white;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+.register:hover{
+    border: 1.5px solid white;
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255, 0.1);
+}
+.login:hover{
+    text-decoration: underline !important;
+}
+
+/* Hamburger menu styling */
+.hamburger {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px; /* Adjust size as needed */
+    height: 20px; /* Adjust size as needed */
+    transition: transform 0.3s ease; /* Add transition for smooth effect */
+}
+.bar {
+    width: 100%;
+    height: 3px; /* Thickness of the bars */
+    background-color: rgb(255, 255, 255); /* Change to your desired color */
+    margin: 2px 0; /* Space between bars */
+    transition: all 0.3s ease; /* Smooth transition for rotation and position */
+}
+.hamburger.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 5.5px); /* Rotate top bar */
+}
+
+.hamburger.open .bar:nth-child(2) {
+    opacity: 0; /* Hide middle bar */
+}
+
+.hamburger.open .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(4px, -4px); /* Rotate bottom bar */
+}
+
+
+
+/* Dropdown menu default hidden */
+.dropdown-menu {
+    position: absolute;
+    top: 155px !important; /* Adjust to the height of your header */
+    right: 0;
+    display: none;  /* Initially hidden */
+    z-index: 100;
+}
+
+/* Make the dropdown menu visible */
+.dropdown-menu.visible {
+    display: block;
+    background-color: #EE929D;
+    height: 100vh ;
+    overflow: hidden;   
+    border-top: none;
+    border-top: 2px solid white;
+    animation: slideIn 0.2s forwards ease-in-out; 
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(100%); /* Start from the right, off-screen */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Move to the original position */
+    }
+}
+
+/* .dropdown-menu.hidden {
+    animation: slideOut 2s forwards ease-out; 
+}
+@keyframes slideOut {
+    from {
+        transform: translateX(0); 
+    }
+    to {
+        transform: translateX(100%);
+    }
+} */
+
+/* Dropdown menu items */
+.dropdown-menu ul {
+    list-style: none;
+    padding: 5em 4em;
+}
+
+.dropdown-menu ul li {
+    padding: 0.5em;
+    font-size: 2em;
+    font-weight: 800;
+}
+
+.dropdown-menu ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 0.5em;
+    border: 1px solid #EE929D;
+    border-bottom: none;
+}
+
+.dropdown-menu ul li a:hover {
+    border: 1px solid white;
+    padding: 0.5em;
+    border-radius: 5px;
+}

@@ -1,0 +1,20 @@
+/* buttons */
+.button{
+    border-radius: 7px;
+    padding: 0.75em 1em;
+    font-size: 1.1em;
+    font-weight:800;
+}
+.add-song-button{
+    border: 1px solid #be5f6a;
+    background-color: white;
+    color: #be5f6a;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.add-song-button:hover{
+    border: 1px solid #be5f6a;
+    background-color: #fff7f8;
+    color: #be5f6a;
+    border-radius: 4px;
+}

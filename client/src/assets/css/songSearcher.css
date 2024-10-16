@@ -1,0 +1,58 @@
+.searching-for-song-wrapper{
+    position: fixed;
+    top:0;
+    width: 100% !important;
+    height: 100vh;
+    background-color: #be5f6a;
+    color: white;
+    text-align: center;
+    padding: 8em 0;
+    animation: slideUp 1s forwards ease-in-out; 
+}
+@keyframes slideUp {
+    0% {
+        transform: translateY(90%); 
+        opacity: 0.1;
+    }
+    50% {
+        
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(0); 
+        opacity: 1;
+    }
+}
+.searching-for-song-wrapper h1{
+    font-size: 3.5em;
+    font-weight: 800;
+}
+.searching-for-song-wrapper h2{
+    font-size: 1.6em;
+    font-weight: 400;
+}
+
+
+/* SPINNING RECORD BUTTON */
+.spinning-record button {
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    font-size: 6em;
+    font-weight: 400;
+    border: 40px solid rgb(255, 255, 255);
+    color: white;
+    background-color: #EE929D;
+    font-family: "Irish Grover", system-ui;
+    box-shadow: 1px 1px 7px 3px rgb(255, 255, 255);
+    animation: spinning 3s linear infinite; 
+}
+
+@keyframes spinning {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

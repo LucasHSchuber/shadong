@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import keys from "../../../client/env.js";
@@ -24,7 +24,7 @@ type Song = {
 
 
 const Songresult = () => {
-    const [songResults, setSongResults] = useState([]);
+    // const [songResults, setSongResults] = useState([]);
     const [isRecording, setIsRecording] = useState(false);
     const [accessToken, setAccessToken] = useState('');
     const [songsByArtist, setSongsByArtist] = useState<Song[]>([]);

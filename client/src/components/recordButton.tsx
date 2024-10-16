@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 // import keys
@@ -15,14 +15,14 @@ interface AudioRecorderProps {
   }
 
 const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingStatusChange }) => {
-    const [isRecording, setIsRecording] = useState(false);
+    // const [isRecording, setIsRecording] = useState(false);
     const mediaRecorderRef = useRef<MediaRecorder | null>(null);
     const audioChunksRef = useRef<Blob[]>([]);
     const navigate = useNavigate(); 
     
     const startRecording = async () => {
         console.log("Start recording....")
-        setIsRecording(true);
+        // setIsRecording(true);
         onRecordingStatusChange(true);
         const stream = await navigator.mediaDevices.getUserMedia({
             audio: {
@@ -53,7 +53,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingStatusChange }
     };
     
     const stopRecording = () => {
-        setIsRecording(false);
+        // setIsRecording(false);
         mediaRecorderRef.current?.stop();
     };
 
@@ -75,7 +75,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingStatusChange }
             console.log('Recognition Result:', response.data);
             if (response.data.status === "success" && response.data.result !== null) {
                 onRecordingStatusChange(false);
-                setIsRecording(false);
+                // setIsRecording(false);
                 console.log("Found The Song!")
                 navigate('/songresult', { state: { songResult: response.data.result } }); 
                 

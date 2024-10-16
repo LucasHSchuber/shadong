@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 // import images
 import heroimage from "../assets/images/hero.jpg"

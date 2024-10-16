@@ -10,7 +10,7 @@ import "../src/assets/css/buttons.css"
 
 
 import { HashRouter, Routes, Route } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion"; 
+import { AnimatePresence } from "framer-motion"; 
 
 import Index from "./pages/index"
 import Songresult from "./pages/songresult";

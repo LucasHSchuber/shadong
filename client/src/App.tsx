@@ -14,6 +14,9 @@ import { AnimatePresence } from "framer-motion";
 
 import Index from "./pages/index"
 import Songresult from "./pages/songresult";
+import Register from "./pages/register";
+import Login from "./pages/login";
+import Myshelf from "./pages/myshelf";
 
 function App() {
 
@@ -25,6 +28,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/songresult" element={<Songresult />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/myshelf" element={<Myshelf />} />
             {/* <Route 
             path="/songresult" 
             element={

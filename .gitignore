@@ -10,7 +10,7 @@ lerna-debug.log*
 node_modules
 client/node_modules
 client/node_modules/
-client/src/apiConfig.js
+client/apiConfig.js
 client/env.js
 client/.env
 

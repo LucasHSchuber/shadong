@@ -9,21 +9,21 @@ const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);  // Toggle menu open/close
+        setIsMenuOpen(!isMenuOpen);  
     };
 
 
 // Effect to handle scroll disabling
 useEffect(() => {
     if (isMenuOpen) {
-        document.body.style.overflow = 'hidden'; // Disable scroll
+        document.body.style.overflow = 'hidden'; 
     } else {
-        document.body.style.overflow = 'auto'; // Enable scroll
+        document.body.style.overflow = 'auto'; 
     }
 
     // Cleanup function to reset overflow when the component unmounts or when menu is closed
     return () => {
-        document.body.style.overflow = 'auto'; // Reset to auto on unmount
+        document.body.style.overflow = 'auto'; 
     };
 }, [isMenuOpen]);
 
@@ -32,11 +32,11 @@ useEffect(() => {
     <header className="header">
             <div className='d-flex '>
                 <h1 className="title">
-                    <Link to="/">Shadong</Link>  {/* Link to home page */}
+                    <Link to="/">Shadong</Link>  
                 </h1>
                 <div className='header-links'>
-                    <a className='login'><Link to="/">Log In</Link></a>
-                    <a className='register'><Link to="/">Create Account</Link></a>
+                    <a className='login'><Link to="/login">Log In</Link></a>
+                    <a className='register'><Link to="/register">Create Account</Link></a>
                 </div>
             </div>
             <div className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
@@ -47,10 +47,10 @@ useEffect(() => {
             {/* Dropdown Menu */}
             <div className={`dropdown-menu ${isMenuOpen ? 'visible' : 'hidden'}`}>
                 <ul>
-                    <li><a href="/">My Shelf</a></li>
-                    <li><a href="/">Account</a></li>
-                    <li><a href="/">About Shadong</a></li>
-                    <li><a href="/">Logout</a></li>
+                    <li><Link to="/myshelf">My Shelf</Link></li>
+                    <li><Link to="/myshelf">Account</Link></li>
+                    <li><Link to="/myshelf">About Shadong</Link></li>
+                    <li><Link to="/myshelf">Logout</Link></li>
                 </ul>
             </div>
         </header>

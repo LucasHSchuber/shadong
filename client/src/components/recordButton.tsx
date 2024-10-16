@@ -2,7 +2,10 @@ import { useRef } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
 // import keys
-import keys from "../../../client/env.js";
+// import keys from "../../../client/env.js";
+const apiKey = import.meta.env.VITE_API_KEY;
+
+// console.log(apiKey, spotifyClientId, spotifyClientSecret);
 // console.log('keys', keys);
 
 
@@ -67,7 +70,7 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingStatusChange }
                     'Content-Type': 'multipart/form-data',
                 },
                 params: {
-                    api_token: keys.API_KEY,
+                    api_token: apiKey,
                     // api_token: "123", 
                     return: 'apple_music,spotify',
                 }

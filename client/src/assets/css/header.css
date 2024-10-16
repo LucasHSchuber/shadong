@@ -6,7 +6,7 @@
     padding: 10px 20px;
     background-color: inherit;
     position: relative;
-    padding: 4em 6em;
+    padding: 3em 6em;
     background-color: #EE929D;
 }
 
@@ -123,6 +123,7 @@
 
 /* Dropdown menu items */
 .dropdown-menu ul {
+    display: block;
     list-style: none;
     padding: 5em 4em;
 }
@@ -134,7 +135,7 @@
 }
 
 .dropdown-menu ul li a {
-    color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255) !important; 
     text-decoration: none;
     padding: 0.5em;
     border: 1px solid #EE929D;
@@ -142,6 +143,7 @@
 }
 
 .dropdown-menu ul li a:hover {
+    width: fit-content;
     border: 1px solid white;
     padding: 0.5em;
     border-radius: 5px;

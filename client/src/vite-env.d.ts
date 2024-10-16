@@ -24,3 +24,14 @@ declare module '*.svg' {
     const content: any;
     export default content;
   }
+
+  // Extend ImportMeta interface for environment variables
+  interface ImportMetaEnv {
+    VITE_API_KEY: string;
+    VITE_SPOTIFY_CLIENT_ID: string;
+    VITE_SPOTIFY_CLIENT_SECRET: string;
+  }
+
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }

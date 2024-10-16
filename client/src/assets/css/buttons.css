@@ -18,3 +18,13 @@
     color: #be5f6a;
     border-radius: 4px;
 }
+
+
+.register-button{
+    border: 1px solid #be5f6a;
+    background-color: white;
+    color: #be5f6a;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 10em;
+}

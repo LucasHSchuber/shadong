@@ -1,7 +1,8 @@
 import { useState } from 'react';
+// import axios from 'axios';
 
 // import images
-import heroimage from "../assets/images/hero.jpg"
+import heroimage from "../assets/images/heroimg.jpg"
 
 // import React from 'react';
 import AudioRecorder from "../components/recordButton"
@@ -9,13 +10,18 @@ import Header from "../components/header"
 import Footer from "../components/footer"
 import SongSearcher from "../components/songSearcher"
 
+import API_URL from '../../apiConfig.js'; 
+console.log('API_URL', API_URL);
+
+
+
 const Index = () => {
   const [isRecording, setIsRecording] = useState(false);
 
 
   const handleRecordingStatus = (status: boolean) => {
     setIsRecording(status);
-};
+  };
 
   return (
     <div className='index-wrapper'>

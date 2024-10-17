@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
+//toaster
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Importing the CSS
+import { Slide } from 'react-toastify';
+
 // import keys from "../../../client/env.js";
 const spotifyClientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
 const spotifyClientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
@@ -117,6 +122,7 @@ const Songresult = () => {
         try {
             const response = await axios.post(`${API_URL}api/songs/add`, songData);
             console.log('Song added:', response.data);
+            toast.success("Song added to shelf!");
         } catch (error) {
             console.error('Error adding song:', error);
         }
@@ -152,10 +158,10 @@ const Songresult = () => {
             <div className='songresult-songs-container'>
                 {songsByArtist && songsByArtist.map(song => (
                     <div className='songresult-songsbyartist' key={song.id}>
-
-                        <img src={spotify} alt={song.id + "Spotify Logo"} className='spotify-icon' title="Open In Spotify" onClick={() => playSong(song.uri)}></img>
-                    
-                        <img src={song.images.length > 0 ? song.images[0].url : img} alt={`Song Id ${song.id}`} className='album-img' onClick={() => playSong(song.uri)} title="Open In Spotify"></img>
+                        <div onClick={() => playSong(song.uri)}>
+                            <img src={spotify} alt={song.id + "Spotify Logo"} className='spotify-icon' title="Open In Spotify"></img>
+                            <img src={song.images.length > 0 ? song.images[0].url : img} alt={`Song Id ${song.id}`} className='album-img' title="Open In Spotify"></img>
+                        </div>
                         <h1>{song.name}</h1>
                         <h2>Released: {song.release_date}</h2>
                     </div>
@@ -170,6 +176,21 @@ const Songresult = () => {
         < SongSearcher />
       }
       < Footer />
+
+      < ToastContainer
+        position="bottom-left"
+        autoClose={4000}
+        hideProgressBar={false}
+        transition={Slide}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ fontSize: '15px', height: "3em", width: "22em", margin: "0 0 4em 2em" }}
+      />
     </div>
   ) 
 };

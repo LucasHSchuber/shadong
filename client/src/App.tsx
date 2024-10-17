@@ -4,6 +4,7 @@
 // import './App.css'
 import "../src/assets/css/main.css"
 import "../src/assets/css/buttons.css"
+import "../src/assets/css/toastStyles.css"
 // import "../src/css/components.css"
 // import "../src/css/buttons.css"
 
@@ -17,6 +18,8 @@ import Songresult from "./pages/songresult";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Myshelf from "./pages/myshelf";
+
+
 
 function App() {
 

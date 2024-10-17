@@ -4,16 +4,18 @@ import cors from 'cors';
 import initDatabase from './database.js';
 import seedDatabase from './sampledata.js';
 import dotenv from 'dotenv';
+import jsonwebtoken from 'jsonwebtoken';
 
-// import env from "./env.js"
 
 dotenv.config(); // Load environment variables from .env file
 
 const app = express();
+app.use(express.json());
+const JWT_SECRET = 'your_jwt_secret'; 
+
 const port = 5005;
 
 app.use(cors());
-app.use(express.json());
 
 // Initialize database
 let db;
@@ -40,7 +42,7 @@ app.get('/', (req, res) => {
 // Route to add a user
 app.post('/api/users/register', async (req, res) => {
     console.log('Register route hit');
-    console.log('Request body:', req.body); // Log the incoming request body
+    console.log('Request body:', req.body); 
     const { firstname, surname, email, password } = req.body;
 
     // Validate the input
@@ -49,38 +51,65 @@ app.post('/api/users/register', async (req, res) => {
     }
 
     try {
-        // Check for existing email
-        const existingUser = await new Promise((resolve, reject) => {
-            db.get(`SELECT * FROM users WHERE email = ?`, [email], (err, row) => {
-                if (err) {
-                    console.error('Error checking existing user:', err);
-                    return reject(err);
-                }
-                resolve(row);
-            });
-        });
-
+        // Step 1: Check for existing email
+        const existingUserStmt = `SELECT * FROM users WHERE email = ?`;
+        const existingUser = await db.get(existingUserStmt, [email])
+    
         if (existingUser) {
-            return res.status(409).json({ message: 'Email already exists.' });
+            res.status(409).json({ message: 'Email already exists.' });
+        } else {
+            // Step 2: Insert the new user
+            const insertUserStmt = `
+            INSERT INTO users (firstname, surname, email, password)
+            VALUES (?, ?, ?, ?);
+            `;
+            await db.run(insertUserStmt, [firstname, surname, email, password]);
+
+            console.log('User added successfully.');
+            res.status(201).json({ message: 'User added successfully.' });
         }
 
-        // Insert the new user
-        await new Promise((resolve, reject) => {
-            db.run(`INSERT INTO users (firstname, surname, email, password) VALUES (?, ?, ?, ?)`, [firstname, surname, email, password], function (err) {
-                if (err) {
-                    console.error('Error inserting user:', err.message);
-                    return reject(err);
-                }
-                console.log('Inserted user ID:', this.lastID);
-                resolve(this.lastID);
-            });
-        });
-
-        console.log('User added successfully.');
-        return res.status(201).json({ message: 'User added successfully.' });
+        
     } catch (err) {
         console.error('Failed to add user:', err);
         return res.status(500).json({ message: 'Failed to add user.' });
+    }
+});
+
+
+
+// Route to login a user
+app.post('/api/users/login', async (req, res) => {
+    console.log('Login route hit');
+    console.log('Request body:', req.body); 
+    const { email, password } = req.body;
+
+    // Validate the input
+    if (!email || !password) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+
+    try {
+        // Step 1: Check for existing email
+        const existingUserStmt = `SELECT * FROM users WHERE email = ?`;
+        const existingUser = await db.get(existingUserStmt, [email])
+    
+        if (!existingUser) {
+            res.status(404).json({ message: 'Email does not exists.' });
+        } else {
+            console.log("existingUser: ", existingUser);
+            if (existingUser.password === password) {
+                // generate token
+                const token = jsonwebtoken.sign({ id: existingUser.id, email: existingUser.email }, JWT_SECRET, { expiresIn: "1h" })
+                await db.run(`UPDATE users SET token = ? WHERE id = ?`, [token, existingUser.id]);
+                res.status(200).json({ message: 'Login successful.', token: token, id: existingUser.id, email: existingUser.email, firstname: existingUser.firstname, surname: existingUser.surname, created: existingUser.created_at })
+            } else {
+                res.status(409).json({ message: 'Incorrect Password!.' });
+            }
+        }
+    } catch (err) {
+        console.error('Failed to login user:', err);
+        return res.status(500).json({ message: 'Failed to login user.' });
     }
 });
 

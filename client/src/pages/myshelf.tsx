@@ -6,6 +6,7 @@ import API_URL from '../../apiConfig.js';
 console.log('API_URL', API_URL);
 
 // import images
+import spotify from "../assets/images/spotify.png"
 // import img from "../assets/images/s.png"
 // import heroimage from "../assets/images/hero.jpg"
 
@@ -42,7 +43,7 @@ const Myshelf: React.FC = () => {
                 const response = await axios.get(`${API_URL}api/users/${userId}/songs`);
                 console.log('response', response);
                 if (response.data.length > 0) {
-                    setSongsData(response.data);
+                    setSongsData(response.data.reverse());
 
                     let genreArray: string[] = [];
 
@@ -84,6 +85,11 @@ const Myshelf: React.FC = () => {
     };
 
 
+    const playSong = (uri: string) => {
+        console.log('playing song', uri);
+        window.open(uri, '_blank');
+    }
+
 
 
 
@@ -101,11 +107,14 @@ const Myshelf: React.FC = () => {
        
        <div className='myshelf-music-box'> 
         <div className='my-5'>
-            <h1 className='title'>My Songs</h1>
+            <h1 className='title'>Most Recent Songs</h1>
                 <div className='myshelf-songs-container'>
-                    {songsData && songsData.map(song => (
+                    {songsData && songsData.slice(0, 6).map(song => (
                         <div className='myshelf-songs' key={song.spotify_id}>
-    <                       img src={song.image_url} alt={`Song Id ${song.song_id}`} className='album-img'  title="Open In Spotify"></img>
+                            <div onClick={() => playSong(song.spotify_uri)}>
+                                <img src={spotify} alt={song.spotify_id + "Spotify Logo"} className='myshelf-spotify-icon' title="Open In Spotify" ></img>
+                                <img src={song.image_url} alt={`Song Id ${song.song_id}`} className='album-img'  title="Open In Spotify" ></img>
+                            </div>
                             <h1>{song.title}</h1>
                             <h2>{song.artist}</h2>
                             <h2>
@@ -119,14 +128,34 @@ const Myshelf: React.FC = () => {
 
            <div className='my-5'>
                 <h1 className='title'>Explore Favorite Genres</h1>
-                <div className='d-flex'>
-                    {topGenres && topGenres.slice(0,5).map(genre => (
+                <div className='d-flex myshelf-genre-container'>
+                    {topGenres && topGenres.slice(0, 4).map(genre => (
                         <div className='myshelf-genre' key={genre.genre}>
                            <h1>{genre.genre}</h1>
                         </div>
                     ))}
                 </div>
-            </div>         
+            </div>      
+
+
+            <div className='my-5'>
+            <h1 className='title'>All Songs</h1>
+                <div className='myshelf-songs-container'>
+                    {songsData && songsData.slice(6, songsData.length).map(song => (
+                        <div className='myshelf-songs' key={song.spotify_id}>
+                            <div onClick={() => playSong(song.spotify_uri)}>
+                                <img src={spotify} alt={song.spotify_id + "Spotify Logo"} className='myshelf-spotify-icon' title="Open In Spotify" ></img>
+                                <img src={song.image_url} alt={`Song Id ${song.song_id}`} className='album-img'  title="Open In Spotify" ></img>
+                            </div>
+                            <h1>{song.title}</h1>
+                            <h2>{song.artist}</h2>
+                            <h2>
+                                Genre: {song.genres.split(",").map(genre => genre.trim()).join(", ")}
+                            </h2>
+                        </div>
+                    ))}
+                </div>
+           </div>     
 
 
       </div>

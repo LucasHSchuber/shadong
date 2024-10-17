@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 
 import API_URL from '../../apiConfig.js'; 
@@ -28,6 +29,7 @@ const Login: React.FC = () => {
         email: '',
         password: ''
     });
+    const navigate = useNavigate();
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +48,15 @@ const Login: React.FC = () => {
         try {
             const response = await axios.post(`${API_URL}api/users/login`, formData )
             console.log('response', response);
+            if (response.status === 200) {
+                const token = response.data.token;
+                console.log('token', token);
+                sessionStorage.setItem("user_token", token);
+                sessionStorage.setItem("user_id", response.data.id);
+                sessionStorage.setItem("user_email", response.data.email);
+                sessionStorage.setItem("user_firstname", response.data.firstname);
+                navigate("/");
+            }
         } catch (error) {
             console.log('error when logging in user: ', error);
         }

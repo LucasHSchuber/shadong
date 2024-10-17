@@ -15,6 +15,7 @@ const initDatabase = async () => {
         surname TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
         password TEXT NOT NULL,
+        token TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
     )`);
 

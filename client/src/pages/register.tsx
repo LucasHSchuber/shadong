@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { AxiosError } from 'axios';
+
 // import { useLocation } from 'react-router-dom';
+//toaster
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Importing the CSS
+import { Slide } from 'react-toastify';
+
 
 import API_URL from '../../apiConfig.js'; 
 console.log('API_URL', API_URL);
@@ -22,7 +29,7 @@ interface FormData {
     surname: string;
     email: string;
     password: string;
-    repeatpassword: string
+    // repeatpassword: string
 }
 
 const Register: React.FC = () => {
@@ -31,11 +38,9 @@ const Register: React.FC = () => {
         firstname: '',
         surname: '',
         email: '',
-        password: '',
-        repeatpassword: ''
-
+        password: ''
     });
-
+    const [repeatPassword, setRepeatPassword] = useState<string>("");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -54,9 +59,23 @@ const Register: React.FC = () => {
         console.log('Form submitted:', formData);
         try {
             const response = await axios.post(`${API_URL}api/users/register`, formData )
-            console.log('response', response.data);
-        } catch (error) {
-            console.log('error when adding user to users table: ', error);
+            console.log('response', response);
+            if (response.status === 201) {
+                console.log('Created!');
+                toast.success("Account registerd successfully!");
+            } 
+        } catch (error: unknown) {
+            // Type assertion to handle error as AxiosError
+            const axiosError = error as AxiosError;
+            console.log('error when adding user to users table: ', axiosError);
+            if (axiosError.response && axiosError.response.status === 409) {
+                console.log('Email already exists!!');
+                toast.success("Email already exists");
+            } else {
+                // Handle other types of errors (optional)
+                console.error('An error occurred:', axiosError.message);
+                toast.error("An error occurred. Please try again.");
+            }
         }
     };
 
@@ -64,7 +83,7 @@ const Register: React.FC = () => {
     const checkFormPassword = (formData: FormData) => {
         
         let check = false;
-        if (formData.password.toLocaleLowerCase() !== formData.repeatpassword.toLocaleLowerCase()) {
+        if (formData.password.toLocaleLowerCase() !== repeatPassword.toLocaleLowerCase()) {
             check = true;
             console.log("Passwords does not match");
         }
@@ -81,7 +100,7 @@ const Register: React.FC = () => {
       < Header />
 
       <div className='register-box'>
-            <h2 className='mb-3'>Register</h2>
+            <h2 className='mb-3'>Create Account</h2>
             <p>It's 100% free to register and use Shadong. Don't worry about later fees, because there are none!</p>
             <hr></hr>
             <form onSubmit={handleSubmit}>
@@ -159,8 +178,8 @@ const Register: React.FC = () => {
                         type='password'
                         id='repeatpassword'
                         name='repeatpassword'
-                        value={formData.repeatpassword}
-                        onChange={handleChange}
+                        value={repeatPassword}
+                        onChange={(e) => setRepeatPassword(e.target.value)}
                         required
                     />
                     </div>
@@ -170,6 +189,22 @@ const Register: React.FC = () => {
         </div>
      
       < Footer />
+
+      < ToastContainer
+        position="bottom-left"
+        autoClose={4000}
+        hideProgressBar={false}
+        transition={Slide}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        style={{ fontSize: '15px', height: "3em", width: "22em", margin: "0 0 4em 2em" }}
+      />
+
     </div>
   ) 
 };

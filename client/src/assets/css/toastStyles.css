@@ -1,0 +1,9 @@
+/* Add this to your CSS or styled-components */
+.Toastify__slide-enter {
+    animation-duration: 0.1s !important; /* 200ms for faster entry */
+  }
+  
+  .Toastify__slide-exit {
+    animation-duration: 0.05s !important; /* 200ms for faster exit */
+  }
+  

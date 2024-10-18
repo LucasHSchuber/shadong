@@ -36,7 +36,6 @@ const Index = () => {
             {/* <h1>Find the song with Shadong</h1> */}
             <h1>Just <span>Shadong</span> It!</h1>
             <p>It’s simple. Just press the record button and find the song from the radio or your computer speaker. Once the song is found, add it to your Shadong Shelf and play it whenever you want </p>
-            {/* <button className='mt-3 button add-song-button' >Log In</button> */}
             <p style={{ fontWeight: "900", fontSize: "1.8em", textDecoration: "underline", marginTop: "2em" }}>100% FREE!</p>
         </div>
       </div>

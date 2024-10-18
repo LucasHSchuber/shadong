@@ -3,6 +3,10 @@
     background-color: #EE929D;
     font-family: 'Frank Ruhl Libre', serif;
 }
+.index-loggedin-wrapper{
+    background-color: #EE929D;
+    font-family: 'Frank Ruhl Libre', serif;
+}
 .songresult-wrapper{
     background-color: #EE929D;
     font-family: 'Frank Ruhl Libre', serif;
@@ -12,6 +16,10 @@
     font-family: 'Frank Ruhl Libre', serif;
 }
 .myshelf-wrapper{
+    background-color: #EE929D;
+    font-family: 'Frank Ruhl Libre', serif;
+}
+.about-wrapper{
     background-color: #EE929D;
     font-family: 'Frank Ruhl Libre', serif;
 }
@@ -60,8 +68,6 @@
  font-weight: 400;
 }
 
-
-
 .info-wrapper{
     height: 30em;
     background-color: #ffffff;
@@ -70,39 +76,55 @@
 .content-wrapper-1{
     background-color: #EE929D;
     color: white;
-    height: 8em;
+    height: 6em;
     text-align: left;
-    padding: 2em 10em;
+    padding: 1.5em 10em;
 }
 .content-wrapper-2{
     background-color: #ffffff;
     color: #EE929D;
-    height: 8em;
+    height: 6em;
     text-align: right;
-    padding: 2em 14em;
+    padding: 1.5em 14em;
 }
 .content-wrapper-3{
     background-color: #EE929D;
     color: white;
-    height: 8em;
+    height: 6em;
     text-align: left;
-    padding: 2em 18em;
+    padding: 1.5em 18em;
 }
 .content-wrapper-4{
     background-color: #ffffff;
     color: #EE929D;
-    height: 8em;
+    height: 6em;
     text-align: right;
-    padding: 2em 22em;
+    padding: 1.5em 22em;
 }
 .content-wrapper-5{
     background-color: #EE929D;
     color: white;
-    height: 8em;
-    padding: 2em 22em;
+    height: 9em;
+    padding: 2.5em 22em;
     text-align: center;
     font-family: "Irish Grover", system-ui;
 }
+
+
+
+
+
+/* -----  INDEX LOGGEDIN  -----  */
+
+.index-loggedin-box{
+    padding: 3em 10em 5em 10em;
+}
+.index-loggedin-box h1, p{
+   color: white !important;
+   font-weight: 800;
+}
+
+
 
 
 
@@ -243,6 +265,7 @@
 }
 .myshelf-songs{
     width: 200px;
+    transition: 0.2s;
 }
 .myshelf-songs img{
     width: 200px;
@@ -301,4 +324,25 @@
 }
 .myshelf-songs:hover .myshelf-spotify-icon {
     opacity: 1; 
+}
+
+
+
+
+/* ----  ABOUT  ----- */
+
+.about-box{
+    margin-top: 4em !important;
+    max-height: 16em !important;
+    width: 75%;
+    color: white;
+    padding: 0 10em;
+}
+.about-box h1{
+    font-weight: 800;
+    margin-bottom: 0.5em;
+}
+.about-box p{
+    font-size: 1.3em;
+    font-weight: 500;
 }

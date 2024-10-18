@@ -106,16 +106,19 @@ const Songresult = () => {
 
 
     const addToShelf = async () => {
+        const userId = sessionStorage.getItem("user_id");
+        console.log('userId', userId);
         console.log('Adding song to shelf...');
     
         const songData = {
             spotifyId: songResult.spotify.id,
-            userId: 3, 
+            userId: userId, 
             title: songResult.title,
             artist: songResult.artist,
             genres: songResult.apple_music.genreNames,
             image_url: songResult.spotify.album.images[0].url,
             spotify_uri: songResult.spotify.uri,
+            artist_id: artistID
         };
         console.log('songData', songData);
     

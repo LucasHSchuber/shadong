@@ -8,7 +8,7 @@ const Footer = () => {
 
 
   return (
-    <header className="footer">
+    <footer className="footer">
             <h1 className="title">Shadong</h1>
     
             <div className={`footer-link-menu`}>
@@ -18,7 +18,7 @@ const Footer = () => {
                     <li><a href="/logout">Logout</a></li>
                 </ul>
             </div>
-        </header>
+      </footer>
   );
 };
 

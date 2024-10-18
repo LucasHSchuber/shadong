@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useLocation } from 'react-router-dom';
 
 import API_URL from '../../apiConfig.js'; 
 console.log('API_URL', API_URL);
 
+// import keys from "../../../client/env.js";
+const spotifyClientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+const spotifyClientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
+
 // import images
 import spotify from "../assets/images/spotify.png"
-// import img from "../assets/images/s.png"
-// import heroimage from "../assets/images/hero.jpg"
 
 import "../assets/css/recordButton.css"
 // import React from 'react';
@@ -16,6 +17,8 @@ import AudioRecorder from "../components/recordButton"
 import Header from "../components/header"
 import Footer from "../components/footer"
 import SongSearcher from "../components/songSearcher"
+
+import FetchSongs from "../assets/tsx/fetchSongs.js";
 
 
 type Song = {
@@ -34,51 +37,7 @@ const Myshelf: React.FC = () => {
     const [isRecording, setIsRecording] = useState(false);
     const [songsData, setSongsData] = useState<Song[]>([]);
     const [topGenres, setTopGenres] = useState<{ genre: string; count: number }[]>([]);
-
-      // Fetch songs when component mounts
-    useEffect(() => {
-        const fetchSongs = async () => {
-          const userId = 3;
-            try {
-                const response = await axios.get(`${API_URL}api/users/${userId}/songs`);
-                console.log('response', response);
-                if (response.data.length > 0) {
-                    setSongsData(response.data.reverse());
-
-                    let genreArray: string[] = [];
-
-                    // Your existing code to fill genreArray
-                    response.data.forEach((song: Song) => {
-                        genreArray.push(...song.genres.split(',').map(genre => genre.trim())); 
-                    });
-                    
-                    // Count occurrences of each genre
-                    const genreCount = genreArray.reduce<{ [key: string]: number }>((acc, genre) => {
-                        acc[genre] = (acc[genre] || 0) + 1;
-                        return acc;
-                    }, {});
-                    
-                    // Convert genreCount object to an array of objects
-                    const topGenresArray = Object.entries(genreCount).map(([genre, count]) => ({
-                        genre,
-                        count,
-                    }));
-                    console.log('topGenresArray', topGenresArray);
-
-                    const topGenres = topGenresArray.filter(g => g.genre !== "Music")
-                    console.log('topGenres', topGenres);
-
-                    setTopGenres(topGenres);
-                    
-                }
-            } catch (err) {
-                console.log('err', err);
-            }
-        };
-        fetchSongs();
-    }, [API_URL]);
-
-
+    const [accessToken, setAccessToken] = useState('');
   
     const handleRecordingStatus = (status: boolean) => {
         setIsRecording(status);
@@ -89,6 +48,63 @@ const Myshelf: React.FC = () => {
         console.log('playing song', uri);
         window.open(uri, '_blank');
     }
+
+
+    // Get Access Token
+    useEffect(() => {
+        const getAccessToken = async () => {
+            const authString = `${spotifyClientId}:${spotifyClientSecret}`;
+            const base64Auth = btoa(authString); 
+
+            const response = await fetch('https://accounts.spotify.com/api/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': `Basic ${base64Auth}`,
+                },
+                body: 'grant_type=client_credentials',
+            });
+
+            const data = await response.json();
+            console.log('data token', data);
+            setAccessToken(data.access_token); 
+        };
+
+        getAccessToken();
+    }, []);
+    
+    const getRecommendations = async (genre: string) => {
+        console.log('genre', genre);      
+        try {
+          const response = await fetch(`https://api.spotify.com/v1/recommendations?seed_genres=${genre.toLowerCase()}&limit=10`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+           
+          });
+      
+          const data = await response.json();
+          console.log('data recommendations', data);
+          
+        } catch (error) {
+          console.error('Error fetching recommendations:', error);
+        }
+
+        try {
+          const response = await fetch(`https://api.spotify.com/v1/search?q=genre:${genre}&type=album&limit=10`, {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+           
+          });
+      
+          const data = await response.json();
+          console.log('data albums', data);
+          
+        } catch (error) {
+          console.error('Error fetching recommendations:', error);
+        }
+    };
 
 
 
@@ -130,7 +146,7 @@ const Myshelf: React.FC = () => {
                 <h1 className='title'>Explore Favorite Genres</h1>
                 <div className='d-flex myshelf-genre-container'>
                     {topGenres && topGenres.slice(0, 4).map(genre => (
-                        <div className='myshelf-genre' key={genre.genre}>
+                        <div className='myshelf-genre' key={genre.genre} onClick={() => getRecommendations(genre.genre)}>
                            <h1>{genre.genre}</h1>
                         </div>
                     ))}
@@ -141,7 +157,7 @@ const Myshelf: React.FC = () => {
             <div className='my-5'>
             <h1 className='title'>All Songs</h1>
                 <div className='myshelf-songs-container'>
-                    {songsData && songsData.slice(6, songsData.length).map(song => (
+                    {songsData && songsData.map(song => (
                         <div className='myshelf-songs' key={song.spotify_id}>
                             <div onClick={() => playSong(song.spotify_uri)}>
                                 <img src={spotify} alt={song.spotify_id + "Spotify Logo"} className='myshelf-spotify-icon' title="Open In Spotify" ></img>
@@ -159,6 +175,8 @@ const Myshelf: React.FC = () => {
 
 
       </div>
+
+      <FetchSongs setSongsData={setSongsData} setTopGenres={setTopGenres} />
      
       < AudioRecorder onRecordingStatusChange={handleRecordingStatus} />
       {isRecording && 

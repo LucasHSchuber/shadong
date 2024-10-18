@@ -10,9 +10,7 @@ async function seedDatabase() {
 
     // Insert users
     await db.exec(`INSERT INTO users (firstname, surname, email, password) VALUES
-        ('John', 'Doe', 'john.doe@example.com', 'hashed_password_1'),
-        ('Jane', 'Smith', 'jane.smith@example.com', 'hashed_password_2'),
-        ('Alice', 'Johnson', 'alice.johnson@example.com', 'hashed_password_3');`);
+        ('Alice', 'Johnson', 'alice.johnson@example.com', 'password');`);
 
     // // Insert genres
     // await db.exec(`INSERT INTO genres (name) VALUES

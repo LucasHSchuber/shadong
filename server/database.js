@@ -4,7 +4,7 @@ import { open } from 'sqlite';
 
 const initDatabase = async () => {
     const db = await open({
-        filename: './database.db', // Path to your SQLite file
+        filename: './database.db', 
         driver: sqlite3.Database
     });
 
@@ -22,14 +22,16 @@ const initDatabase = async () => {
     // Create the songs table if it doesn't exist
     await db.exec(`CREATE TABLE IF NOT EXISTS songs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        spotify_id TEXT UNIQUE NOT NULL,
+        spotify_id TEXT NOT NULL,
         user_id INTEGER,
         title TEXT NOT NULL,
         artist TEXT NOT NULL,
+        artist_id TEXT,
         image_url TEXT NOT NULL,
         spotify_uri TEXT NOT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+        UNIQUE(spotify_id, user_id)
     )`);
 
      // Create the genres table if it doesn't exist

@@ -116,27 +116,30 @@ app.post('/api/users/login', async (req, res) => {
 
 
 app.post('/api/songs/add', async (req, res) => {
-    const { spotifyId, userId, title, artist, genres, image_url, spotify_uri } = req.body;
+    const { spotifyId, userId, title, artist, genres, image_url, spotify_uri, artist_id } = req.body;
 
     if (!spotifyId || !userId || !title || !artist || !genres) {
         return res.status(400).json({ message: 'Required fields are missing.' });
     }
 
     try {
-        // Step 1: Insert the song into the songs table if it doesn't exist
-        const insertSongStmt = `
-            INSERT INTO songs (spotify_id, user_id, title, artist, image_url, spotify_uri)
-            VALUES (?, ?, ?, ?, ?, ?)
-            ON CONFLICT(spotify_id) DO NOTHING;
-        `;
-        await db.run(insertSongStmt, [spotifyId, userId, title, artist, image_url, spotify_uri]);
 
-        // Step 2: Get the song ID from the inserted or existing song
+        // Step 1: Check for existing song in songs table
+
+        // Step 2: Insert the song into the songs table if it doesn't exist
+        const insertSongStmt = `
+            INSERT INTO songs (spotify_id, user_id, title, artist, image_url, spotify_uri, artist_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(spotify_id, user_id) DO NOTHING; 
+        `;
+        await db.run(insertSongStmt, [spotifyId, userId, title, artist, image_url, spotify_uri, artist_id]);
+
+        // Step 3: Get the song ID from the inserted or existing song
         const getSongIdStmt = `SELECT id FROM songs WHERE spotify_id = ?`;
         const songResult = await db.get(getSongIdStmt, [spotifyId]);
         const songId = songResult.id;
 
-        // Step 3: Process each genre
+        // Step 4: Process each genre
         for (const genre of genres) {
             // Insert genre into genres table or ignore if it already exists
             const insertGenreStmt = `
@@ -151,7 +154,7 @@ app.post('/api/songs/add', async (req, res) => {
             const genreResult = await db.get(getGenreIdStmt, [genre]);
             const genreId = genreResult.id;
 
-            // Step 4: Insert into song_genres table if not already existing
+            // Step 5: Insert into song_genres table if not already existing
             const insertSongGenreStmt = `
                 INSERT INTO song_genres (song_id, genre_id)
                 VALUES (?, ?)

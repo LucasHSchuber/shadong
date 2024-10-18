@@ -8,20 +8,27 @@ import "../src/assets/css/toastStyles.css"
 // import "../src/css/components.css"
 // import "../src/css/buttons.css"
 
+import ProtectedRoute from "./components/protectedRoute";
+import { useAuth } from './components/authContext';
+
 
 
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"; 
 
 import Index from "./pages/index"
+import Index_loggedin from "./pages/index_loggedin"
 import Songresult from "./pages/songresult";
 import Register from "./pages/register";
 import Login from "./pages/login";
 import Myshelf from "./pages/myshelf";
+import About from "./pages/about";
 
 
 
 function App() {
+  //define states
+  const { isLoggedIn } = useAuth();
 
   return (
     <HashRouter>
@@ -29,27 +36,30 @@ function App() {
         {/* <Layout> */}
         {/* < Header /> */}
           <Routes>
-            <Route path="/" element={<Index />} />
+            
+            <Route path="/" element={
+                isLoggedIn ? (
+                  < ProtectedRoute >
+                     <Index_loggedin />
+                  </ProtectedRoute>
+                ) : (
+                 <Index />
+                )
+              } 
+            />
+
             <Route path="/songresult" element={<Songresult />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/myshelf" element={<Myshelf />} />
-            {/* <Route 
-            path="/songresult" 
-            element={
-              <motion.div
-                initial={{ opacity: 0 }} // Starting state for entering animation
-                animate={{ opacity: 1 }} // Ending state for entering animation
-                exit={{ opacity: 0 }} // Ending state for exiting animation
-                transition={{ duration: 1 }} // Duration of the transition
-              >
-                <Songresult />
-              </motion.div>
-            } 
-          /> */}
-            {/* <Route path="/myshelf" element={<Index />} />'
-            <Route path="/about" element={<Index />} />'
-            '<Route path="/logout" element={<Index />} />' */}
+            <Route path="/about" element={<About />} />
+            <Route path="/myshelf" element={
+              < ProtectedRoute >
+                  <Myshelf />
+              </ProtectedRoute>
+              } 
+            />
+            
+
           </Routes>
         {/* </Layout> */}
       </AnimatePresence>

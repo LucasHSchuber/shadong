@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import { useLocation } from 'react-router-dom';
 
+import { useAuth } from '../components/authContext';
+
 import API_URL from '../../apiConfig.js'; 
 console.log('API_URL', API_URL);
 
@@ -29,6 +31,7 @@ const Login: React.FC = () => {
         email: '',
         password: ''
     });
+    const { login } = useAuth();
     const navigate = useNavigate();
 
 
@@ -51,10 +54,12 @@ const Login: React.FC = () => {
             if (response.status === 200) {
                 const token = response.data.token;
                 console.log('token', token);
-                sessionStorage.setItem("user_token", token);
+                // sessionStorage.setItem("user_token", token);
                 sessionStorage.setItem("user_id", response.data.id);
                 sessionStorage.setItem("user_email", response.data.email);
                 sessionStorage.setItem("user_firstname", response.data.firstname);
+                sessionStorage.setItem("user_surname", response.data.surname);
+                login(token);
                 navigate("/");
             }
         } catch (error) {
